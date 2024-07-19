@@ -26,10 +26,10 @@ const userSlice = createSlice({
         state.email = action.payload.user.email;
         document.cookie = `Token=${action.payload.user.token}`;
       })
-      .addCase(fetchLoginUser, (state, action) => {
+      .addCase(fetchLoginUser.fulfilled, (state, action) => {
         state.username = action.payload.user.username;
         state.bio = action.payload.user.bio;
-        state.image = action.payload.user.image
+        state.image = action.payload.user.image;
         state.email = action.payload.user.email;
         document.cookie = `Token=${action.payload.user.token}`;
       });
