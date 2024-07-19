@@ -1,0 +1,62 @@
+.header {
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 25px;
+  padding-top: 25px;
+}
+
+.title {
+  margin-left: 25px;
+  font-size: 18px;
+}
+
+.titleLink {
+  text-decoration: none;
+  color: #000000D9;
+}
+
+.buttons {
+  margin-right: 25px;
+}
+
+.signIn {
+  margin-right: 15px;
+  font-size: 18px;
+  background: inherit;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer; 
+}
+
+.signUp {
+  font-size: 18px;
+  background: inherit;
+  color: #52c41a;
+  border: 1px solid #52c41a;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer; 
+}
+
+.signIn:hover {
+  background-color: rgb(235, 233, 233);
+}
+
+.signIn:focus,
+.signIn:active {
+  background-color: inherit; 
+  outline: none; 
+}
+
+.signUp:hover {
+  background-color: #c0e1b0;
+}
+
+.signUp:focus,
+.signUp:active {
+  background-color: inherit; 
+  outline: none; 
+}

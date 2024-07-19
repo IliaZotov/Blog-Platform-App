@@ -1,0 +1,46 @@
+.formContainer {
+  margin-top: 25px;
+  margin-bottom: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 384px;
+  min-height: 523;
+  background-color: #ffffff;
+  border: 1px solid #d9d9d9;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+}
+.title {
+  margin-top: 35px;
+}
+
+.buttonForm {
+  margin-bottom: 0;
+}
+
+.checkbox {
+  width: 320px;
+  margin-left: -105px;
+  color: #595959;
+  border-top: 1px solid #d9d9d9;
+  padding-top: 5px;
+}
+
+.signUpInfo {
+  display: flex;
+  align-items: center;
+  margin-left: 60px;
+  margin-bottom: 15px;
+}
+
+.info {
+  margin-right: 5px;
+  color: #8c8c8c;
+  font-size: 12px;
+}
+
+.link {
+  font-size: 12px;
+}
