@@ -1,5 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchCreateUser, fetchLoginUser } from './userFetch';
+import {
+  fetchCreateUser,
+  fetchGetUser,
+  fetchLoginUser,
+  fetchUpdateUser,
+} from './userFetch';
 import { deleteCookie } from '../../utils/cookie';
 const initialState = {
   username: '',
@@ -24,14 +29,25 @@ const userSlice = createSlice({
       .addCase(fetchCreateUser.fulfilled, (state, action) => {
         state.username = action.payload.user.username;
         state.email = action.payload.user.email;
-        document.cookie = `Token=${action.payload.user.token}`;
+        document.cookie = `token=${action.payload.user.token}`;
       })
       .addCase(fetchLoginUser.fulfilled, (state, action) => {
         state.username = action.payload.user.username;
         state.bio = action.payload.user.bio;
         state.image = action.payload.user.image;
         state.email = action.payload.user.email;
-        document.cookie = `Token=${action.payload.user.token}`;
+        document.cookie = `token=${action.payload.user.token}`;
+      })
+      .addCase(fetchGetUser.fulfilled, (state, action) => {
+        state.username = action.payload.user.username;
+        state.image = action.payload.user.image;
+        state.email = action.payload.user.email;
+      })
+      .addCase(fetchUpdateUser.fulfilled, (state, action) => {
+        state.username = action.payload.user.username;
+        state.image = action.payload.user.image;
+        state.email = action.payload.user.email;
+        document.cookie = `token=${action.payload.user.token}`;
       });
   },
 });

@@ -1,33 +1,50 @@
-import { Button, Checkbox, Form, Input, message } from 'antd';
-import { Link, useNavigate } from 'react-router-dom';
-import styles from './SignUp.module.scss';
-import { useDispatch } from 'react-redux';
-import { fetchCreateUser } from '../redux/userSlice/userFetch';
+import React, { useEffect } from 'react';
+import styles from './Profile.module.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { Button, Form, Input } from 'antd';
+import { fetchUpdateUser } from '../redux/userSlice/userFetch';
 
-const SignUp = () => {
+const Profile = () => {
+  const { username, email, image } = useSelector((state) => state.userSlice);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [form] = Form.useForm();
 
-  const onSubmit = ({ username, email, password }) => {
-    console.log('Success:', { username, email, password });
-    dispatch(fetchCreateUser({ username, email, password }));
+  useEffect(() => {
+    form.setFieldsValue({
+      username: username,
+      email: email,
+      image: image,
+    });
+  }, [username, email, image, form]);
+
+  const onSubmit = ({ email, username, image }) => {
+    console.log('Profile>>> Success:', { username, email, image });
+    dispatch(fetchUpdateUser({ email, username, image }));
+    navigate('/');
   };
+
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
 
   return (
     <div className={styles.formContainer}>
-      <h3 className={styles.title}>Create new account</h3>
+      <h3 className={styles.title}>Edit Profile</h3>
       <Form
+        form={form}
         className={styles.form}
         layout='vertical'
         name='basic'
+        labelCol={{
+          span: 8,
+        }}
+        wrapperCol={{
+          span: 16,
+        }}
         style={{
           maxWidth: 600,
-        }}
-        initialValues={{
-          remember: false,
         }}
         onFinish={onSubmit}
         onFinishFailed={onFinishFailed}
@@ -55,6 +72,7 @@ const SignUp = () => {
         >
           <Input placeholder='Username' style={{ width: '320px' }} />
         </Form.Item>
+
         <span>Email address</span>
         <Form.Item
           label=''
@@ -72,7 +90,8 @@ const SignUp = () => {
         >
           <Input placeholder='Email address' style={{ width: '320px' }} />
         </Form.Item>
-        <span>Password</span>
+
+        <span>New password</span>
         <Form.Item
           label=''
           name='password'
@@ -90,66 +109,30 @@ const SignUp = () => {
         >
           <Input.Password placeholder='Password' style={{ width: '320px' }} />
         </Form.Item>
-        <span>Repeat password</span>
+
+        <span>Avatar Image (url)</span>
         <Form.Item
           label=''
-          name='rep password'
-          dependencies={['password']}
-          hasFeedback
+          name='image'
           rules={[
             {
-              required: true,
-              message: 'Please confirm your password!',
-            },
-            ({ getFieldValue }) => ({
-              validator(_, value) {
-                if (!value || getFieldValue('password') === value) {
-                  return Promise.resolve();
-                }
-                return Promise.reject(new Error('Passwords must match'));
-              },
-            }),
-          ]}
-        >
-          <Input.Password
-            placeholder='Repeat Password'
-            style={{ width: '320px' }}
-          />
-        </Form.Item>
-
-        <Form.Item
-          name='remember'
-          valuePropName='checked'
-          rules={[
-            {
-              validator: (_, value) =>
-                value
-                  ? Promise.resolve()
-                  : Promise.reject(
-                      new Error('You must accept the terms and conditions')
-                    ),
+              pattern:
+                /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/,
+              message: 'URL is not correct',
             },
           ]}
         >
-          <Checkbox className={styles.checkbox}>
-            I agree to the processing of my personal information
-          </Checkbox>
+          <Input placeholder='Image URL' style={{ width: '320px' }} />
         </Form.Item>
 
         <Form.Item className={styles.buttonForm}>
           <Button type='primary' htmlType='submit' style={{ width: '320px' }}>
-            Create
+            Save
           </Button>
         </Form.Item>
-        <div className={styles.signUpInfo}>
-          <p className={styles.info}>Already have an account?</p>
-          <Link to='/sign-in' className={styles.link}>
-            Sign In
-          </Link>
-        </div>
       </Form>
     </div>
   );
 };
 
-export default SignUp;
+export default Profile;

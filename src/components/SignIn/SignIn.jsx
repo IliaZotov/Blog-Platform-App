@@ -10,8 +10,9 @@ const SignIn = () => {
 
   const onSubmit = ({ email, password }) => {
     console.log('Success:', { email, password });
-    dispatch(fetchLoginUser({ email, password }));
+    dispatch(fetchLoginUser({ email, password })).then(() => navigate('/'));
   };
+
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
@@ -39,7 +40,6 @@ const SignIn = () => {
         onFinishFailed={onFinishFailed}
         autoComplete='off'
       >
-        
         <span>Email address</span>
         <Form.Item
           label=''
@@ -51,7 +51,11 @@ const SignIn = () => {
             },
           ]}
         >
-          <Input placeholder='Email address' style={{ width: '320px' }} />
+          <Input
+            placeholder='Email address'
+            style={{ width: '320px' }}
+            defaultValue='jopa1488@gmail.com'
+          />
         </Form.Item>
 
         <span>Password</span>
@@ -70,7 +74,11 @@ const SignIn = () => {
             },
           ]}
         >
-          <Input.Password placeholder='Password' style={{ width: '320px' }} />
+          <Input.Password
+            placeholder='Password'
+            style={{ width: '320px' }}
+            defaultValue='Gjkysq[f[f1488'
+          />
         </Form.Item>
 
         <Form.Item
@@ -85,7 +93,7 @@ const SignIn = () => {
             htmlType='submit'
             style={{ width: '320px', marginLeft: '-105px' }}
           >
-            Create
+            Login
           </Button>
         </Form.Item>
         <div className={styles.signInInfo}>

@@ -5,6 +5,7 @@ import ArticleList from '../Article-List/Article-List';
 import ArticleSinglePage from '../Article-SinglePage/Article-SinglePage';
 import SignIn from '../SignIn/SignIn';
 import SignUp from '../SignUp/SignUp';
+import Profile from '../Profile/Profile';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path='/articles/:slug' element={<ArticleSinglePage />} />
           <Route path='sign-in' element={<SignIn />} />
           <Route path='sign-up' element={<SignUp />} />
+          <Route path='profile' element={<Profile />} />
         </Route>
       </Routes>
     </div>
