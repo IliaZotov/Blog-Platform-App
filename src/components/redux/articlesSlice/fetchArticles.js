@@ -5,8 +5,6 @@ export const fetchArticleList = createAsyncThunk(
   'articles/fetchArticlesList',
   async ({ limit, offset }, { rejectWithValue }) => {
     try {
-      // console.log('Запрос начинается'); // Лог перед началом запроса
-
       const token = getCookie('token');
       const BASE_URL = 'https://blog.kata.academy/api/articles';
       const res = await fetch(`${BASE_URL}?limit=${limit}&offset=${offset}`, {
@@ -17,21 +15,16 @@ export const fetchArticleList = createAsyncThunk(
         },
       });
 
-      // console.log('Ответ получен, проверка статуса'); // Лог после получения ответа
-
       if (!res.ok) {
-        // console.error('Ошибка запроса: статус ответа не ок'); // Лог при ошибке статуса ответа
         throw new Error('Ошибка запроса');
       }
 
       const data = await res.json();
-      // console.log('Данные получены', data); // Лог после получения данных
       return data;
     } catch (err) {
-      // console.error('Ошибка в блоке catch', err); // Лог при ошибке в блоке catch
       return rejectWithValue(err.message);
     }
-  }
+  },
 );
 
 export const fetchArticleSinglePage = createAsyncThunk(
@@ -47,21 +40,147 @@ export const fetchArticleSinglePage = createAsyncThunk(
           Authorization: `Token ${token}`,
         },
       });
-      console.log('fetchArticleSinglePage>>> Ответ получен, проверка статуса'); // Лог после получения ответа
 
       if (!res.ok) {
-        console.error(
-          'fetchArticleSinglePage>>> Ошибка запроса: статус ответа не ок'
-        ); // Лог при ошибке статуса ответа
-        throw new Error('fetchArticleSinglePage>>> Ошибка запроса');
+        throw new Error('Ошибка запроса');
       }
 
       const data = await res.json();
-      console.log('fetchArticleSinglePage>>> Данные получены', data); // Лог после получения данных
       return data;
     } catch (err) {
-      console.error('fetchArticleSinglePage>>> Ошибка в блоке catch', err); // Лог при ошибке в блоке catch
       return rejectWithValue(err.message);
     }
-  }
+  },
+);
+
+export const fetchCreateArticle = createAsyncThunk(
+  'article, fetchCreateArticle',
+  async (body, { rejectWithValue }) => {
+    try {
+      const token = getCookie('token');
+      const BASE_URL = 'https://blog.kata.academy/api/articles';
+      const res = await fetch(BASE_URL, {
+        method: 'POST',
+        body: JSON.stringify({ article: body }),
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+          Authorization: `Token ${token}`,
+        },
+      });
+
+      if (!res.ok) {
+        throw new Error('Ошибка запроса');
+      }
+
+      const data = await res.json();
+      return data;
+    } catch (err) {
+      return rejectWithValue(err.message);
+    }
+  },
+);
+
+export const fetchDeleteArticle = createAsyncThunk(
+  'article, fetchDeleteArticle',
+  async (slug, { rejectWithValue }) => {
+    try {
+      const token = getCookie('token');
+      const BASE_URL = 'https://blog.kata.academy/api/articles';
+      const res = await fetch(`${BASE_URL}/${slug}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+          Authorization: `Token ${token}`,
+        },
+      });
+
+      if (!res.ok) {
+        throw new Error('Ошибка запроса');
+      }
+
+      const data = await res.json();
+      return data;
+    } catch (err) {
+      return rejectWithValue(err.message);
+    }
+  },
+);
+
+export const fetchUpdateArticle = createAsyncThunk(
+  'article, fetchUpdateArticle',
+  async ({ body, slug }, { rejectWithValue }) => {
+    try {
+      const token = getCookie('token');
+      const BASE_URL = 'https://blog.kata.academy/api/articles';
+      const res = await fetch(`${BASE_URL}/${slug}`, {
+        method: 'PUT',
+        body: JSON.stringify({ article: body }),
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+          Authorization: `Token ${token}`,
+        },
+      });
+
+      if (!res.ok) {
+        throw new Error('Ошибка запроса');
+      }
+
+      const data = await res.json();
+      return data;
+    } catch (err) {
+      return rejectWithValue(err.message);
+    }
+  },
+);
+
+export const fetchFavoriteArticle = createAsyncThunk(
+  'article, fetchFavoriteArticle',
+  async (slug, { rejectWithValue }) => {
+    try {
+      const token = getCookie('token');
+      const BASE_URL = 'https://blog.kata.academy/api/articles';
+      const res = await fetch(`${BASE_URL}/${slug}/favorite`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+          Authorization: `Token ${token}`,
+        },
+      });
+
+      if (!res.ok) {
+        throw new Error('fetchFavoritArticle>>> Ошибка запроса');
+      }
+
+      const data = await res.json();
+      return data;
+    } catch (err) {
+      return rejectWithValue(err.message);
+    }
+  },
+);
+
+export const fetchUnFavoriteArticle = createAsyncThunk(
+  'article, fetchUnFavoriteArticle',
+  async (slug, { rejectWithValue }) => {
+    try {
+      const token = getCookie('token');
+      const BASE_URL = 'https://blog.kata.academy/api/articles';
+      const res = await fetch(`${BASE_URL}/${slug}/favorite`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+          Authorization: `Token ${token}`,
+        },
+      });
+
+      if (!res.ok) {
+        throw new Error('Ошибка запроса');
+      }
+
+      const data = await res.json();
+      return data;
+    } catch (err) {
+      return rejectWithValue(err.message);
+    }
+  },
 );

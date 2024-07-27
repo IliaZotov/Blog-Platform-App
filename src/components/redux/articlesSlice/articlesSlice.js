@@ -1,5 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchArticleList, fetchArticleSinglePage } from './fetchArticles';
+import {
+  fetchArticleList,
+  fetchArticleSinglePage,
+  fetchCreateArticle,
+  fetchUpdateArticle,
+} from './fetchArticles';
 
 const initialState = {
   articles: [],
@@ -45,6 +50,14 @@ const articleSlice = createSlice({
       .addCase(fetchArticleSinglePage.rejected, (state, action) => {
         state.status = 'rejected';
         state.errorMessage = action.error.message;
+      })
+      .addCase(fetchCreateArticle.rejected, (state, action) => {
+        state.status = 'rejected';
+        state.errorMessage = action.error.message;
+      })
+      .addCase(fetchUpdateArticle.rejected, (state, actions) => {
+        state.status = 'rejected';
+        state.errorMessage = actions.error.message;
       });
   },
 });

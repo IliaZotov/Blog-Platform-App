@@ -1,13 +1,13 @@
 import React from 'react';
-import styles from './Error-Component.module.scss';
 import { Alert } from 'antd';
+import styles from './Error-Component.module.scss';
 
-const ErrorComponent = ({ className }) => {
+const ErrorComponent = ({ className, errorMessage }) => {
   return (
     <div>
       <Alert
         type='error'
-        message='Hm, something went wrong...'
+        message={errorMessage}
         banner
         className={`${styles.error} ${className}`}
       />

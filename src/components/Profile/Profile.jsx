@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import styles from './Profile.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Button, Form, Input } from 'antd';
+import styles from './Profile.module.scss';
 import { fetchUpdateUser } from '../redux/userSlice/userFetch';
 
 const Profile = () => {
@@ -18,9 +18,8 @@ const Profile = () => {
       image: image,
     });
   }, [username, email, image, form]);
-
+  // eslint-disable-next-line
   const onSubmit = ({ email, username, image }) => {
-    console.log('Profile>>> Success:', { username, email, image });
     dispatch(fetchUpdateUser({ email, username, image }));
     navigate('/');
   };
@@ -37,15 +36,9 @@ const Profile = () => {
         className={styles.form}
         layout='vertical'
         name='basic'
-        labelCol={{
-          span: 8,
-        }}
-        wrapperCol={{
-          span: 16,
-        }}
-        style={{
-          maxWidth: 600,
-        }}
+        labelCol={{ span: 8 }}
+        wrapperCol={{ span: 16 }}
+        style={{ maxWidth: 600 }}
         onFinish={onSubmit}
         onFinishFailed={onFinishFailed}
         autoComplete='off'

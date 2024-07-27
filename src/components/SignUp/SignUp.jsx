@@ -1,36 +1,37 @@
-import { Button, Checkbox, Form, Input, message } from 'antd';
+import { useState } from 'react';
+import { Button, Checkbox, Form, Input } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
-import styles from './SignUp.module.scss';
 import { useDispatch } from 'react-redux';
 import { fetchCreateUser } from '../redux/userSlice/userFetch';
+import styles from './SignUp.module.scss';
+import ErrorComponent from '../Error-Component/Error-Component';
 
 const SignUp = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [error, setError] = useState(null);
 
-  const onSubmit = ({ username, email, password }) => {
-    console.log('Success:', { username, email, password });
-    dispatch(fetchCreateUser({ username, email, password }));
-  };
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
+  const onSubmit = async ({ username, email, password }) => {
+    try {
+      await dispatch(fetchCreateUser({ username, email, password })).unwrap();
+      setError(null);
+      navigate('/');
+    } catch (err) {
+      setError('Invalid email or password');
+    }
   };
 
   return (
     <div className={styles.formContainer}>
       <h3 className={styles.title}>Create new account</h3>
+      {error && <ErrorComponent errorMessage={error} />}
       <Form
         className={styles.form}
         layout='vertical'
         name='basic'
-        style={{
-          maxWidth: 600,
-        }}
-        initialValues={{
-          remember: false,
-        }}
+        style={{ maxWidth: 600 }}
+        initialValues={{ remember: false }}
         onFinish={onSubmit}
-        onFinishFailed={onFinishFailed}
         autoComplete='off'
       >
         <span>Username</span>
@@ -122,12 +123,14 @@ const SignUp = () => {
           valuePropName='checked'
           rules={[
             {
-              validator: (_, value) =>
-                value
-                  ? Promise.resolve()
-                  : Promise.reject(
-                      new Error('You must accept the terms and conditions')
-                    ),
+              validator: (_, value) => {
+                if (value) {
+                  return Promise.resolve();
+                }
+                return Promise.reject(
+                  new Error('You must accept the terms and conditions'),
+                );
+              },
             },
           ]}
         >

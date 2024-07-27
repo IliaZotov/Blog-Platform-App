@@ -6,6 +6,7 @@ import {
   fetchUpdateUser,
 } from './userFetch';
 import { deleteCookie } from '../../utils/cookie';
+
 const initialState = {
   username: '',
   bio: '',

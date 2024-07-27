@@ -1,6 +1,6 @@
+import { Outlet } from 'react-router';
 import Header from '../Header/Header';
 import styles from './Layout-Content.module.scss';
-import { Outlet } from 'react-router';
 
 const LayoutContent = () => {
   return (

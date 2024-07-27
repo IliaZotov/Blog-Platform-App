@@ -1,7 +1,7 @@
-import styles from './Header.module.scss';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import styles from './Header.module.scss';
 import { getCookie } from '../utils/cookie';
 import { fetchGetUser } from '../redux/userSlice/userFetch';
 import { logOutProfile } from '../redux/userSlice/userSlice';
@@ -53,7 +53,7 @@ const Header = () => {
         <Link className={styles.userLink} to='profile'>
           <span className={styles.userName}>{username}</span>
           <img
-            src={image ? image : userpic}
+            src={image || userpic}
             alt='user pic'
             className={styles.userPic}
           />

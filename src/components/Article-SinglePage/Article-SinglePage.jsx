@@ -1,16 +1,16 @@
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router';
 import styles from './Article-SinglePageContent.module.scss';
 import ArticlePreview from '../Article-Preview/Article-Preview';
 import Spinner from '../Spinner/Spinner';
 import ErrorComponent from '../Error-Component/Error-Component';
 import { fetchArticleSinglePage } from '../redux/articlesSlice/fetchArticles';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router';
 
 const ArticleSinglePage = () => {
   const dispatch = useDispatch();
   const { articleSinglePage, status } = useSelector(
-    (state) => state.articleSlice
+    (state) => state.articleSlice,
   );
   const { slug } = useParams();
 

@@ -1,16 +1,24 @@
+import { useState } from 'react';
 import { Button, Form, Input } from 'antd';
-import styles from './SignIn.module.scss';
-import { fetchLoginUser } from '../redux/userSlice/userFetch';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { fetchLoginUser } from '../redux/userSlice/userFetch';
+import ErrorComponent from '../Error-Component/Error-Component';
+import styles from './SignIn.module.scss';
 
 const SignIn = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [error, setError] = useState(null);
 
-  const onSubmit = ({ email, password }) => {
-    console.log('Success:', { email, password });
-    dispatch(fetchLoginUser({ email, password })).then(() => navigate('/'));
+  const onSubmit = async ({ email, password }) => {
+    try {
+      await dispatch(fetchLoginUser({ email, password })).unwrap();
+      setError(null);
+      navigate('/');
+    } catch (err) {
+      setError('Invalid email or password');
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -20,22 +28,15 @@ const SignIn = () => {
   return (
     <div className={styles.formContainer}>
       <h3 className={styles.title}>Sign In</h3>
+      {error && <ErrorComponent errorMessage={error} />}{' '}
       <Form
         className={styles.form}
         layout='vertical'
         name='basic'
-        labelCol={{
-          span: 8,
-        }}
-        wrapperCol={{
-          span: 16,
-        }}
-        style={{
-          maxWidth: 600,
-        }}
-        initialValues={{
-          remember: true,
-        }}
+        labelCol={{ span: 8 }}
+        wrapperCol={{ span: 16 }}
+        style={{ maxWidth: 600 }}
+        initialValues={{ remember: true }}
         onFinish={onSubmit}
         onFinishFailed={onFinishFailed}
         autoComplete='off'
@@ -51,11 +52,7 @@ const SignIn = () => {
             },
           ]}
         >
-          <Input
-            placeholder='Email address'
-            style={{ width: '320px' }}
-            defaultValue='jopa1488@gmail.com'
-          />
+          <Input placeholder='Email address' style={{ width: '320px' }} />
         </Form.Item>
 
         <span>Password</span>
@@ -74,11 +71,7 @@ const SignIn = () => {
             },
           ]}
         >
-          <Input.Password
-            placeholder='Password'
-            style={{ width: '320px' }}
-            defaultValue='Gjkysq[f[f1488'
-          />
+          <Input.Password placeholder='Password' style={{ width: '320px' }} />
         </Form.Item>
 
         <Form.Item
