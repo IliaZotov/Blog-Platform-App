@@ -12,7 +12,7 @@ const NewArticlePage = () => {
     dispatch(
       fetchCreateArticle({ title, description, body, tagList: tagsValue }),
     );
-    navigate('/');
+    navigate('/articles');
   };
 
   return (

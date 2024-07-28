@@ -21,10 +21,6 @@ const SignIn = () => {
     }
   };
 
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
-  };
-
   return (
     <div className={styles.formContainer}>
       <h3 className={styles.title}>Sign In</h3>
@@ -38,7 +34,6 @@ const SignIn = () => {
         style={{ maxWidth: 600 }}
         initialValues={{ remember: true }}
         onFinish={onSubmit}
-        onFinishFailed={onFinishFailed}
         autoComplete='off'
       >
         <span>Email address</span>

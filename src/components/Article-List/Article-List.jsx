@@ -47,14 +47,17 @@ const ArticleList = () => {
       />
     ) : null;
 
-  console.log(articlesList);
-
   return (
     <div className={styles.cardsListContainer}>
       <ul className={styles.cardsList}>
         {error}
         {spinner}
-        {articlesList || <ErrorComponent />}
+        {articlesList || (
+          <ErrorComponent
+            className={styles.error}
+            errorMessage={'Hm, something went wrong...'}
+          />
+        )}
       </ul>
       <div>{pagination}</div>
     </div>
